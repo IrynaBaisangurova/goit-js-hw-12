@@ -6,9 +6,9 @@
 .input-search {
   width: 320px;
   border-radius: 7px;
-  border: 2px solid #60656A;
+  border: 2px solid #60656a;
   outline: transparent;
-  background: #EDF4FA;
+  background: #edf4fa;
   padding: 10px 16px;
   margin-bottom: 8px;
 }
@@ -19,9 +19,9 @@
 
 .button-search {
   border-radius: 8px;
-  background: #60656A;
-  border: 1px solid #60656A;
-  color: #EDF4FA;
+  background: #60656a;
+  border: 1px solid #60656a;
+  color: #edf4fa;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
@@ -33,110 +33,84 @@
 
 .button-search:hover,
 .button-load:hover {
-  background: #EDF4FA;
-  border: 1px solid #60656A;
-  color: #60656A;
+  background: #edf4fa;
+  border: 1px solid #60656a;
+  color: #60656a;
 }
 .button-load {
   border-radius: 8px;
-  background: #60656A;
-  border: 1px solid #60656A;
-  color: #EDF4FA;
+  background: #60656a;
+  border: 1px solid #60656a;
+  color: #edf4fa;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0.04em;
   transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1);
   padding: 8px 25px;
-align-items: center;
+  align-items: center;
+  margin-bottom: 44px;
 }
-.loader {
-  transform: rotateZ(45deg);
-  perspective: 1000px;
-  border-radius: 50%;
-  width: 74px;
-  height: 74px;
-  color: #111;
+
+.loader-box {
+  padding: 5px;
+  margin-bottom: 20px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.loader{
   display: block;
-  margin: 10vh auto 0;
   position: relative;
+  height: 32px;
+  width: 120px;
+  border-bottom: 5px solid #60656a;
+  box-sizing: border-box;
+  animation: balancing 2s linear infinite alternate;
+  transform-origin: 50% 100%;
+  
 }
-.loader:before,
-.loader:after {
+.loader:before{
   content: '';
-  display: block;
   position: absolute;
-  top: 0;
   left: 0;
-  width: inherit;
-  height: inherit;
+  bottom: 0;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  transform: rotateX(70deg);
-  animation: 1s spin linear infinite;
+  background: #60656a;
+  animation: ballbns 2s linear infinite alternate;
 }
-.loader:after {
-  color: #ff3d00;
-  transform: rotateY(70deg);
-  animation-delay: 0.4s;
+.loader:after{
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 20px;
+  width: 20px;
+  transform: translate(-50%, 100%);
+  border-radius: 50%;
+  border: 6px solid #60656a;
 }
-
-@keyframes rotate {
-  0% {
-    transform: translate(-50%, -50%) rotateZ(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotateZ(360deg);
-  }
+@keyframes ballbns {
+  0% {  left: 0; transform: translateX(0%); }
+  100% {  left: 100%; transform: translateX(-100%); }
 }
-
-@keyframes rotate {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(-360deg);
-  }
+@keyframes balancing {
+  0% {  transform: rotate(-15deg); }
+  50% {  transform: rotate(0deg); }
+  100% {  transform: rotate(15deg); }
 }
-
-@keyframes spin {
-  0%,
-  100% {
-    box-shadow: 0.2em 0px 0 0px currentcolor;
-  }
-  12% {
-    box-shadow: 0.2em 0.2em 0 0 currentcolor;
-  }
-  25% {
-    box-shadow: 0 0.2em 0 0px currentcolor;
-  }
-  37% {
-    box-shadow: -0.2em 0.2em 0 0 currentcolor;
-  }
-  50% {
-    box-shadow: -0.2em 0 0 0 currentcolor;
-  }
-  62% {
-    box-shadow: -0.2em -0.2em 0 0 currentcolor;
-  }
-  75% {
-    box-shadow: 0px -0.2em 0 0 currentcolor;
-  }
-  87% {
-    box-shadow: 0.2em -0.2em 0 0 currentcolor;
-  }
-}
-
 
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  row-gap: 20px;
+  gap: 24px;
   justify-content: center;
   padding: 20px 0;
 }
 
 .gallery-item {
-  margin-left: 20px;
   max-width: 320px;
   flex-basis: calc((100% - 48px) / 3);
   transition: transform 0.3s;
@@ -148,15 +122,6 @@ align-items: center;
   box-shadow: 0px 1px 6px rgba(46, 47, 66, 0.08),
     0px 1px 1px rgba(46, 47, 66, 0.16), 0px 2px 1px rgba(46, 47, 66, 0.08);
   transform: scale(1.05);
-}
-
-
-
-.text-load {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.3;
-  letter-spacing: 0.04em;
 }
 
 .gallery-link:hover {
@@ -206,3 +171,35 @@ align-items: center;
   letter-spacing: 0.04em;
   color: #2e2f42;
 }
+
+#loading-message {
+  font-size: 14px;
+  color: #555;
+  font-weight: 400;
+  line-height: 1.3;
+  text-align: center;
+  border: 1px solid #60656a;
+  padding: 4px;
+  margin-bottom: 22px;
+  animation: fadeInOut 1.5s infinite;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.sl-wrapper .sl-navigation button {
+  color: #60656a;
+}
+.sl-wrapper .sl-close {
+  color: #60656a;
+}
+
+
+

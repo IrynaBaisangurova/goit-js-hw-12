@@ -24,14 +24,20 @@ loadingMessage.style.display = 'none';
 
 buttonLoad.addEventListener('click', loadMorePictures);
 
-
 async function loadMorePictures() {
   try {
     currentPage += 1;
     loader.style.display = 'block';
-    loadingMessage.style.display = 'block'; // Show  text
+    loadingMessage.style.display = 'block'; // Hide  text
+    const getCard = () => document.querySelector('.gallery-item').getBoundingClientRect();
+    
     await renderPictures(searchQuery, currentPage);
-    scrollPictures(height * 2, 0);
+
+    window.scrollBy({
+      top: getCard().height * 2,
+      left: 0,
+      behavior: 'smooth',
+    })  
   } catch (error) {
     console.error('Error loading page:', error);
   } finally {
@@ -39,8 +45,6 @@ async function loadMorePictures() {
     loadingMessage.style.display = 'none'; // Hide text
   }
 }
-
-
 
 form.addEventListener('submit', async (event) => {
     try {
@@ -54,7 +58,6 @@ form.addEventListener('submit', async (event) => {
         iziToast.warning({ title: 'Caution', message: 'Please complete the field!' });
         return;
       }
-      
       currentPage = 1;
       await renderPictures(searchQuery, currentPage);
     } catch (error) {
@@ -65,26 +68,13 @@ form.addEventListener('submit', async (event) => {
     }
   });
 
-buttonLoad.addEventListener('click', async () => {
-    try {
-      currentPage += 1;
-      loader.style.display = 'block';
-      await renderPictures(searchQuery.trim(), currentPage);
-    } catch (error) {
-      console.error('Error loading page:', error);
-    } finally {
-      loader.style.display = 'none';
-    }
-  });
-
-
 async function renderPictures(inputValue, currentPage) {
   try {
     const data = await getPictures(inputValue, currentPage);
-    loader.style.display = 'none';
     const totalPages = Math.ceil(data.totalHits / perPage);
     //console.log(`Total number of pages: ${totalPages}, current: ${currentPage}`);
-
+    loader.style.display = 'block';
+  
     if (!data.hits.length) {
       iziToast.error({
         title: 'Error',
@@ -96,14 +86,13 @@ async function renderPictures(inputValue, currentPage) {
       buttonLoad.style.display = 'block';
     }
     
-  
     images.insertAdjacentHTML("beforeend", createMarkup(data.hits));
+   
     const refreshPage = new SimpleLightbox('.gallery a', {
       captionsData: 'alt',
       captionDelay: 250,
     });
     refreshPage.refresh();
-
     form.reset();
 
     if (currentPage >= totalPages) {
@@ -127,13 +116,7 @@ async function renderPictures(inputValue, currentPage) {
   }
 }
 
-function scrollPictures() {  
-  window.scrollBy({
-    top: 0,
-    left: 0,
-    behavior: 'smooth',
-  })  
-};
+
 
 
 
